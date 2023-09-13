@@ -1,0 +1,291 @@
+\documentclass[10pt]{article}
+\author{Gustavo Meireles, José Pombo, Vanessa Lai Leong, Tomás Costa}
+\title{Software Requirements Specification}
+\usepackage{fullpage, float, hyperref}
+
+\begin{document}
+\maketitle
+
+\section{Preamble}
+Este documento é destinado aos desenvolvedores e clientes da aplicação 
+em questão. Esta é a primeira versão deste documento, estando a ser 
+escrita para a disciplina Engenharia de Software. 
+
+Esta aplicação será utilizada para permitir o envio, recebimento e 
+avaliação de trabalhos entre alunos e professores. 
+Estas três funcionalidades são as principais funções da aplicação, 
+sendo necessárias para a sua utilidade básica.
+
+\newpage
+
+\tableofcontents{}
+
+\newpage
+
+\section{User Requirements Definition}
+Esta aplicação permite a um aluno enviar trabalhos a um professor 
+em específico. O aluno será avisado quando o trabalho em questão 
+é recebido pelo professor a quem o trabalho foi enviado. 
+Este será capaz de avaliar o trabalho enviado pelo aluno e 
+enviar a avaliação ao aluno em questão. Sempre que um aluno 
+quiser enviar um documento a um professor, o aluno irá fazer o 
+upload do documento para um servidor central que irá consequentemente 
+enviar o mesmo documento para o professor especificado pelo aluno. 
+Depois de o professor receber o documento, uma notificação é enviada ao 
+aluno a dizer que o documento foi recebido com sucesso. 
+
+Depois de realizar a sua avaliação, o professor pode mandar a mesma 
+ao aluno, esta avaliação será enviada como um email a partir do 
+servidor principal. Este email irá conter a avaliação do professor e 
+informará qual o documento avaliado. Depois do envio da avaliação pelo 
+professor e o recebimento da mesma pelo aluno, o documento 
+guardado no servidor será apagado. Todo este processo é o ciclo 
+principal da aplicação, sendo repetido para todos os envios de trabalhos. 
+O processo descrito deve ser facilmente realizado com um 
+computador e qualquer ficheiro em formato pdf ou qualquer outro
+formato guardado em pleno texto (pdf é o formato 
+preferível para evitar qualquer possibilidade de acontecerem 
+alterações ao documento durante o seu tempo de vida dentro 
+do sistema da aplicação).
+
+\newpage
+
+\section{Requirements}
+
+\subsection{Functional}
+\begin{itemize}
+    \item Login como aluno ou professor;
+    \item Receber trabalhos;
+    \item Avaliar trabalhos;
+    \item Notificar alunos que os trabalhos foram enviados;
+    \item Notificar professores que receberam trabalhos;
+    \item Notificar alunos que os trabalhos from recebidos;
+    \item Notificar professores que os trabalhos foram enviados 
+        para os mesmos;
+    \item Notificar professores que as avaliações foram recebidas
+        pelo aluno que realizou trabalho avaliado;
+\end{itemize}
+
+\newpage
+
+\subsubsection{User authentication}
+O sistema deve fornecer autenticação de utilizador para que os 
+professores e alunos possam aceder às suas contas de forma segura. 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|p{0.6\linewidth}|}
+        \hline
+        \textbf{Function} & Esta função garante que apenas utilizadores autorizados podem aceder ao sistema, verificando a sua 
+        identidade através de nome de utilizador e palavra-passe. \\
+        \hline
+        \textbf{Inputs} & Nome de Utilizador: Fornecido pelo utilizador. \\
+        & Palavra-passe: Fornecida pelo utilizador. \\
+        \hline
+        \textbf{Source} & Utilizador a tentar iniciar sessão. \\
+        \hline
+        \textbf{Outputs} & Autenticação bem-sucedida ou mensagem de erro. \\
+        \hline
+        \textbf{Destination} & Painel de controlo do utilizador ou página de erro. \\
+        \hline
+        \textbf{Action} & O sistema verifica o nome de utilizador e palavra-passe introduzidos em relação às credenciais de 
+        utilizador armazenadas. \\
+        & Se as credenciais forem válidas, o sistema concede acesso à conta do utilizador. \\
+        & Se as credenciais forem inválidas, o sistema apresenta uma mensagem de erro. \\
+        \hline
+        \textbf{Requirements} & Os dados de registo do utilizador (nome de utilizador e palavra-passe) devem ser armazenados de 
+        forma segura no sistema. \\
+        \hline
+        \textbf{Pre-Condition} & O utilizador tem uma conta registada no sistema. \\
+        & O utilizador pretende iniciar sessão. \\
+        \hline
+        \textbf{Post-Condition} & Se a autenticação for bem-sucedida, o utilizador obtém acesso à sua conta e pode 
+        realizar ações autorizadas. \\
+        & Se a autenticação falhar, o utilizador é notificado do erro e não obtém acesso ao sistema. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+
+\subsubsection{Submission of work}
+Os professores devem ser capazes de receber submissões eletrónicas de 
+trabalhos dos estudantes. Os estudantes devem ter a capacidade de 
+submeter trabalhos através do sistema. Os trabalhos devem suportar 
+formatos de documentos comuns (por exemplo, PDF, Word).
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|p{0.6\linewidth}|}
+        \hline
+        \textbf{Function} & Esta função permite que tanto os professores como os estudantes submetam trabalhos eletronicamente 
+        através do sistema. Garante que os trabalhos submetidos suportam formatos de documento comuns, como PDF e Word. \\
+        \hline
+        \textbf{Inputs} & Ficheiro do trabalho submetido (PDF, Word ou formato suportado): 
+        Fornecido pelo utilizador (professor ou estudante). \\
+        \hline
+        \textbf{Source} & Utilizador (professor ou estudante) a iniciar a submissão do trabalho. \\
+        \hline
+        \textbf{Outputs} & Confirmação de submissão de trabalho bem-sucedida ou uma mensagem de erro. \\
+        \hline
+        \textbf{Destination} & Mensagem de confirmação ou mensagem de erro dentro do sistema. \\
+        \hline
+        \textbf{Action} & O sistema aceita e processa o ficheiro do trabalho submetido. \\
+        & Verifica se o formato do ficheiro é suportado (por exemplo, PDF, Word). \\
+        & Se o formato for suportado, o sistema confirma a submissão bem-sucedida. \\
+        & Se o formato não for suportado ou houver algum problema com a submissão, o sistema apresenta uma mensagem de erro. \\
+        \hline
+        \textbf{Requirements} & O sistema deve ter a capacidade de receber e processar submissões eletrónicas de documentos. \\
+        & Os formatos de documento suportados (por exemplo, PDF, Word) devem ser definidos e implementados. \\
+        \hline
+        \textbf{Pre-Condition} & O utilizador (professor ou estudante) tem uma conta ativa e está autenticado no sistema. \\
+        & O utilizador pretende submeter um trabalho. \\
+        \hline
+        \textbf{Post-Condition} & Se a submissão for bem-sucedida e o formato do documento for suportado, o sistema confirma a 
+        submissão bem-sucedida. \\
+        & Se houver problemas com a submissão (por exemplo, formato não suportado ou falha no carregamento), o sistema 
+        apresenta uma mensagem de erro, e a submissão não é processada. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+
+\subsubsection{Evaluation of Work}
+Os professores devem ter a capacidade de avaliar e classificar trabalhos. 
+Os critérios de avaliação (por exemplo, rubricas) devem ser personalizáveis. 
+Os professores devem poder fornecer comentários e atribuir pontuações a cada trabalho. 
+O sistema deve calcular e armazenar as pontuações globais dos trabalhos.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|p{0.6\linewidth}|}
+        \hline
+        \textbf{Function} & Esta função permite aos professores avaliar e classificar trabalhos submetidos pelos estudantes. 
+        Permite critérios de avaliação personalizáveis (por exemplo, rubricas) e oferece aos professores a capacidade de 
+        fornecer comentários e pontuações para cada trabalho. O sistema também calcula e armazena as pontuações globais 
+        dos trabalhos. \\
+        \hline
+        \textbf{Inputs} & Trabalho submetido (pelos estudantes). \\
+        & Critérios de avaliação (personalizáveis, por exemplo, rubricas) fornecidos pelo professor. \\
+        & Comentários e pontuações fornecidos pelo professor. \\
+        \hline
+        \textbf{Source} & Professores a aceder aos trabalhos submetidos pelos estudantes. \\
+        \hline
+        \textbf{Outputs} & Pontuações de avaliação e feedback para cada trabalho. \\
+        & Pontuações globais para cada trabalho. \\
+        \hline
+        \textbf{Destination} & Registo do estudante no sistema (para feedback individual). \\
+        & Armazenamento/base de dados do sistema (para pontuações globais). \\
+        \hline
+        \textbf{Action} & Os professores reveem os trabalhos submetidos. \\
+        & Utilizam critérios de avaliação personalizáveis (por exemplo, rubricas) para avaliar os trabalhos. \\
+        & Os professores fornecem comentários e atribuem pontuações a cada trabalho. \\
+        & O sistema calcula as pontuações globais com base nos critérios fornecidos. \\
+        & As pontuações e feedback são armazenados para cada trabalho. \\
+        \hline
+        \textbf{Requirements} & Critérios de avaliação personalizáveis (por exemplo, rubricas) devem ser definidos e 
+        disponíveis no sistema. \\
+        & O sistema deve suportar o armazenamento de dados de avaliação. \\
+        \hline
+        \textbf{Pre-Conditions} & Os professores têm acesso aos trabalhos submetidos. \\
+        & Os critérios de avaliação estão estabelecidos. \\
+        \hline
+        \textbf{Post-Conditions} & Os trabalhos individuais têm associadas pontuações de avaliação e feedback. \\
+        & As pontuações globais para cada trabalho são calculadas e armazenadas. \\
+        & Os estudantes podem aceder ao seu feedback individual. \\
+        & Os professores podem gerir e rever as avaliações para cada trabalho. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+
+\subsubsection{Notifications for students}
+O sistema deve notificar os estudantes automaticamente quando os seus trabalhos forem avaliados. 
+As notificações devem incluir os resultados da avaliação e os comentários. 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|p{0.6\linewidth}|}
+        \hline
+        \textbf{Function} & Esta função envolve a notificação automática dos estudantes quando os seus trabalhos forem avaliados. 
+        As notificações devem incluir os resultados da avaliação e o feedback. \\
+        \hline
+        \textbf{Inputs} & Resultados da avaliação e feedback gerados durante a avaliação do trabalho. \\
+        \hline
+        \textbf{Source} & O sistema, especificamente o processo de avaliação de trabalhos. \\
+        \hline
+        \textbf{Outputs} & Mensagens de notificação enviadas aos estudantes correspondentes. \\
+        \hline
+        \textbf{Destination} & Canais de comunicação dos estudantes (por exemplo, email, notificações no sistema). \\
+        \hline
+        \textbf{Action} & Após a conclusão da avaliação dos trabalhos, o sistema gera mensagens de notificação. \\
+        & Estas mensagens incluem os resultados da avaliação (pontuações) e o feedback. \\
+        & O sistema envia estas notificações aos respetivos estudantes. \\
+        \hline
+        \textbf{Requirements} & Um mecanismo para a geração de notificações automáticas. \\
+        & Acesso às informações de contacto dos estudantes (por exemplo, endereços de email). \\
+        \hline
+        \textbf{Pre-Conditions} & As avaliações dos trabalhos foram concluídas pelos professores. \\
+        & As informações de contacto dos estudantes estão disponíveis e atualizadas. \\
+        \hline
+        \textbf{Post-Conditions} & Os estudantes recebem notificações automáticas contendo os resultados da avaliação 
+        dos seus trabalhos e o feedback. \\
+        & Os estudantes podem aceder aos seus resultados de avaliação e ao feedback através dos seus canais de comunicação 
+        escolhidos (por exemplo, email, notificações no sistema). \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+
+\subsection{Non-Functional Requirements}
+
+\subsubsection{Performance}
+O sistema deve ser capaz de lidar com um grande número de submissões de trabalhos e avaliações simultaneamente. 
+Os tempos de resposta para aceder aos trabalhos e avaliações devem ser rápidos.
+
+\subsubsection{Security}
+Os dados dos utilizadores, trabalhos e avaliações devem ser armazenados de forma segura. 
+A autenticação de utilizadores deve utilizar métodos de encriptação seguros. 
+Apenas utilizadores autorizados (professores e estudantes) devem ter acesso a dados introduzidos no sistema por outros 
+utilizadores.
+
+\subsubsection{Usability}
+A interface do utilizador deve ser intuitiva e de fácil utilização.
+Professores e estudantes devem conseguir navegar facilmente e executar tarefas dentro do sistema.
+
+\subsubsection{Scalability}
+O sistema deve ser projetado para crescer à medida que o número de utilizadores e submissões aumenta ao longo do tempo.
+A utilização de técnologias provadas em marcado será uma necessidade durante a construção do sistema.
+
+\subsubsection{Stability}
+O sistema deve estar disponível e ser fiável, com um tempo de inatividade mínimo.
+
+\paragraph{Cópia de Segurança e Recuperação de Dados:}
+Deve haver cópias de segurança regulares de dados (trabalhos, avaliações, contas de utilizador).
+Deve existir um plano para a recuperação de dados em caso de falhas no sistema.
+
+\subsubsection{Notification Delivery}
+As notificações aos estudantes/professores devem ser simples e rápidas. 
+As preferências de notificação (por exemplo, email, notificações dentro do sistema) devem ser configuráveis pelos utilizadores.
+
+\newpage
+
+\subsection{User Requirements}
+
+\subsubsection{Professors}
+Os professores devem ter contas com as permissões adequadas para avaliar trabalhos. Isto implica não serem capazes de eliminar
+trabalhos do sistema. Isto não inclui as sua avaliações, o professor será capaz de eliminar qualquer avaliação que
+se encontre no sistema, desde que essa avaliação tenha sido feita pelo professor.
+Devem ser capazes de gerir as suas avaliações e ver o histórico de submissões.
+
+\subsubsection{Students}
+Os estudantes devem ter contas para submeter trabalhos e receber avaliações.
+Devem ser capazes de ver o histórico das submissões de trabalhos e os comentários da avaliação.
+Os alunos serão capazes de eliminar um trabalho do sistema, desde que este ainda não tenha sido avaliado.
+Depois de a avaliação ter sido feita, o trabalho ficará no sistema a não ser que o professor apague a sua avaliação.
+Depois de a avaliação deixar de existir, o aluno será capaz de apagar o seu trabalho.
+
+\end{document}
