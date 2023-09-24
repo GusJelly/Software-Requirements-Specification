@@ -50,27 +50,77 @@ do sistema da aplicação).
 
 \newpage
 
-\section{Requirements}
-
-\subsection{Functional}
+\section{Functional Requirements}
 \begin{itemize}
-    \item Login como aluno ou professor;
-    \item Receber trabalhos;
-    \item Avaliar trabalhos;
-    \item Notificar alunos que os trabalhos foram enviados;
-    \item Notificar professores que receberam trabalhos;
-    \item Notificar alunos que os trabalhos from recebidos;
-    \item Notificar professores que os trabalhos foram enviados 
-        para os mesmos;
-    \item Notificar professores que as avaliações foram recebidas
-        pelo aluno que realizou trabalho avaliado;
+    \item User authentication;
+        \begin{itemize}
+            \item User registration;
+            \item User login;
+        \end{itemize}
+    \item Submission of work;
+    \item Receiving of work;
+    \item Storing of work:
+        \begin{itemize}
+            \item Offline storing of work;
+            \item Online storing of work;
+        \end{itemize}
+    \item File tampering verification;
+    \item Evaluation of work;
+    \item User notifications;
+        \begin{itemize}
+            \item Professor notifications;
+            \item Student notifications;
+        \end{itemize}
 \end{itemize}
 
 \newpage
 
-\subsubsection{User authentication}
-O sistema deve fornecer autenticação de utilizador para que os 
+\subsection{User authentication}
+O sistema deve fornecer autenticação de utilizadores para que os 
 professores e alunos possam aceder às suas contas de forma segura. 
+Os utilizadores criados e existentes serão também utilizados para 
+o funcionamento da aplicação, existindo permissões e proibições diferentes
+entre uma conta de aluno e uma conta de professor.
+
+\subsubsection{User registration}
+A plataforma não terá qualquer conta inicialmente. Os alunos e professores terão
+de criar as suas contas para poderem interagir com qualquer parte da aplicação.
+Consequentemente, é necessário ser possível realizar o registo de utilizadores.
+
+O registo de utilizadores necessita do fornecimento de vários dados distintos:
+\begin{itemize}
+    \item posição:
+        \begin{itemize}
+            \item professor;
+                \begin{itemize}
+                    \item turmas
+                    \item escolas
+                \end{itemize}
+            \item estudante;
+                \begin{itemize}
+                    \item escola
+                    \item turma
+                        \begin{itemize}
+                            \item disciplinas
+                        \end{itemize}
+                \end{itemize}
+        \end{itemize}
+    \item email
+    \item nome de usuário
+    \item nome legal
+    \item password
+\end{itemize}
+
+Toda esta informação será utilizada pela aplicação para criar as relações
+entres contas necessárias para organizar os professores and alunos em turmas
+diferentes. Esta organização evita o contacto entre alunos a professores acidental
+out indesejado (ex: um aluno enviar um trabalho a um professor com quem não tem aulas).
+
+\newpage
+
+Para realizar a autenticação, o utilizador tem de fornecer o seu email e password
+que forem utilizados durante o registo de contas.
+Estes emails e passwords, não estando guardados em pleno texto na base de dados,
 
 \begin{table}[H]
     \centering
@@ -108,7 +158,7 @@ professores e alunos possam aceder às suas contas de forma segura.
 
 \newpage
 
-\subsubsection{Submission of work}
+\subsection{Submission of work}
 Os professores devem ser capazes de receber submissões eletrónicas de 
 trabalhos dos estudantes. Os estudantes devem ter a capacidade de 
 submeter trabalhos através do sistema. Os trabalhos devem suportar 
@@ -151,7 +201,7 @@ formatos de documentos comuns (por exemplo, PDF, Word).
 
 \newpage
 
-\subsubsection{Evaluation of Work}
+\subsection{Evaluation of Work}
 Os professores devem ter a capacidade de avaliar e classificar trabalhos. 
 Os critérios de avaliação (por exemplo, rubricas) devem ser personalizáveis. 
 Os professores devem poder fornecer comentários e atribuir pontuações a cada trabalho. 
@@ -201,7 +251,7 @@ O sistema deve calcular e armazenar as pontuações globais dos trabalhos.
 
 \newpage
 
-\subsubsection{Notifications for students}
+\subsection{Notifications for students}
 O sistema deve notificar os estudantes automaticamente quando os seus trabalhos forem avaliados. 
 As notificações devem incluir os resultados da avaliação e os comentários. 
 
@@ -240,52 +290,35 @@ As notificações devem incluir os resultados da avaliação e os comentários.
 
 \newpage
 
-\subsection{Non-Functional Requirements}
+\section{Non-Functional Requirements}
 
-\subsubsection{Performance}
+\subsection{Performance}
 O sistema deve ser capaz de lidar com um grande número de submissões de trabalhos e avaliações simultaneamente. 
 Os tempos de resposta para aceder aos trabalhos e avaliações devem ser rápidos.
 
-\subsubsection{Security}
+\subsection{Security}
 Os dados dos utilizadores, trabalhos e avaliações devem ser armazenados de forma segura. 
 A autenticação de utilizadores deve utilizar métodos de encriptação seguros. 
 Apenas utilizadores autorizados (professores e estudantes) devem ter acesso a dados introduzidos no sistema por outros 
 utilizadores.
 
-\subsubsection{Usability}
+\subsection{Usability}
 A interface do utilizador deve ser intuitiva e de fácil utilização.
 Professores e estudantes devem conseguir navegar facilmente e executar tarefas dentro do sistema.
 
-\subsubsection{Scalability}
+\subsection{Scalability}
 O sistema deve ser projetado para crescer à medida que o número de utilizadores e submissões aumenta ao longo do tempo.
 A utilização de técnologias provadas em marcado será uma necessidade durante a construção do sistema.
 
-\subsubsection{Stability}
+\subsection{Stability}
 O sistema deve estar disponível e ser fiável, com um tempo de inatividade mínimo.
 
 \paragraph{Cópia de Segurança e Recuperação de Dados:}
 Deve haver cópias de segurança regulares de dados (trabalhos, avaliações, contas de utilizador).
 Deve existir um plano para a recuperação de dados em caso de falhas no sistema.
 
-\subsubsection{Notification Delivery}
+\subsection{Notification Delivery}
 As notificações aos estudantes/professores devem ser simples e rápidas. 
 As preferências de notificação (por exemplo, email, notificações dentro do sistema) devem ser configuráveis pelos utilizadores.
-
-\newpage
-
-\subsection{User Requirements}
-
-\subsubsection{Professors}
-Os professores devem ter contas com as permissões adequadas para avaliar trabalhos. Isto implica não serem capazes de eliminar
-trabalhos do sistema. Isto não inclui as sua avaliações, o professor será capaz de eliminar qualquer avaliação que
-se encontre no sistema, desde que essa avaliação tenha sido feita pelo professor.
-Devem ser capazes de gerir as suas avaliações e ver o histórico de submissões.
-
-\subsubsection{Students}
-Os estudantes devem ter contas para submeter trabalhos e receber avaliações.
-Devem ser capazes de ver o histórico das submissões de trabalhos e os comentários da avaliação.
-Os alunos serão capazes de eliminar um trabalho do sistema, desde que este ainda não tenha sido avaliado.
-Depois de a avaliação ter sido feita, o trabalho ficará no sistema a não ser que o professor apague a sua avaliação.
-Depois de a avaliação deixar de existir, o aluno será capaz de apagar o seu trabalho.
 
 \end{document}
