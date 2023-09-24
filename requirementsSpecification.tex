@@ -118,9 +118,16 @@ out indesejado (ex: um aluno enviar um trabalho a um professor com quem não tem
 
 \newpage
 
-Para realizar a autenticação, o utilizador tem de fornecer o seu email e password
-que forem utilizados durante o registo de contas.
-Estes emails e passwords, não estando guardados em pleno texto na base de dados,
+\subsubsection{User login}
+Depois de estar registado, um utilizador pode realizar o login a qualquer momento que deseja.
+Para realizar o login o utilizador necessita de utilizar dois bocados de informação:
+\begin{itemize}
+    \item username
+    \item password
+\end{itemize}
+Esta informação será enviada ao servidor para ser validada contra todas as contas encontradas
+dentro do sistema. A informação destas contas não é guardada em pleno texto, utilizando
+o método de Hash and Salt garantindo segurança para os utilizadores.
 
 \begin{table}[H]
     \centering
@@ -130,8 +137,8 @@ Estes emails e passwords, não estando guardados em pleno texto na base de dados
         identidade através de nome de utilizador e palavra-passe. \\
         \hline
         \textbf{Inputs} & Nome de Utilizador: Fornecido pelo utilizador. \\
-        & Palavra-passe: Fornecida pelo utilizador. \\
-        \hline
+                        & Palavra-passe: Fornecida pelo utilizador. \\
+                        \hline
         \textbf{Source} & Utilizador a tentar iniciar sessão. \\
         \hline
         \textbf{Outputs} & Autenticação bem-sucedida ou mensagem de erro. \\
@@ -140,19 +147,19 @@ Estes emails e passwords, não estando guardados em pleno texto na base de dados
         \hline
         \textbf{Action} & O sistema verifica o nome de utilizador e palavra-passe introduzidos em relação às credenciais de 
         utilizador armazenadas. \\
-        & Se as credenciais forem válidas, o sistema concede acesso à conta do utilizador. \\
-        & Se as credenciais forem inválidas, o sistema apresenta uma mensagem de erro. \\
-        \hline
+                        & Se as credenciais forem válidas, o sistema concede acesso à conta do utilizador. \\
+                        & Se as credenciais forem inválidas, o sistema apresenta uma mensagem de erro. \\
+                        \hline
         \textbf{Requirements} & Os dados de registo do utilizador (nome de utilizador e palavra-passe) devem ser armazenados de 
-        forma segura no sistema. \\
+        forma segura (Hash and Salt) no sistema. \\
         \hline
         \textbf{Pre-Condition} & O utilizador tem uma conta registada no sistema. \\
-        & O utilizador pretende iniciar sessão. \\
-        \hline
+                               & O utilizador pretende iniciar sessão. \\
+                               \hline
         \textbf{Post-Condition} & Se a autenticação for bem-sucedida, o utilizador obtém acesso à sua conta e pode 
         realizar ações autorizadas. \\
-        & Se a autenticação falhar, o utilizador é notificado do erro e não obtém acesso ao sistema. \\
-        \hline
+                                & Se a autenticação falhar, o utilizador é notificado do erro e não obtém acesso ao sistema. \\
+                                \hline
     \end{tabular}
 \end{table}
 
@@ -163,6 +170,11 @@ Os professores devem ser capazes de receber submissões eletrónicas de
 trabalhos dos estudantes. Os estudantes devem ter a capacidade de 
 submeter trabalhos através do sistema. Os trabalhos devem suportar 
 formatos de documentos comuns (por exemplo, PDF, Word).
+
+Para garantir que os trabalhos não são modificados, todos os documentos enviados pela
+plataforma, serão verificados pela utilização de Hash Codes.
+Casa ficheiro tem o seu próprio hash, sendo este modificado se qualquer tipo de modificação
+acontecer ao ficheiro.
 
 \begin{table}[H]
     \centering
@@ -181,23 +193,43 @@ formatos de documentos comuns (por exemplo, PDF, Word).
         \textbf{Destination} & Mensagem de confirmação ou mensagem de erro dentro do sistema. \\
         \hline
         \textbf{Action} & O sistema aceita e processa o ficheiro do trabalho submetido. \\
-        & Verifica se o formato do ficheiro é suportado (por exemplo, PDF, Word). \\
-        & Se o formato for suportado, o sistema confirma a submissão bem-sucedida. \\
-        & Se o formato não for suportado ou houver algum problema com a submissão, o sistema apresenta uma mensagem de erro. \\
-        \hline
+                        & Verifica se o formato do ficheiro é suportado (por exemplo, PDF, Word). \\
+                        & Se o formato for suportado, o sistema confirma a submissão bem-sucedida. \\
+                        & Se o formato não for suportado ou houver algum problema com a submissão, o sistema apresenta uma mensagem de erro. \\
+                        \hline
         \textbf{Requirements} & O sistema deve ter a capacidade de receber e processar submissões eletrónicas de documentos. \\
-        & Os formatos de documento suportados (por exemplo, PDF, Word) devem ser definidos e implementados. \\
-        \hline
+                              & Os formatos de documento suportados (por exemplo, PDF, Word) devem ser definidos e implementados. \\
+                              \hline
         \textbf{Pre-Condition} & O utilizador (professor ou estudante) tem uma conta ativa e está autenticado no sistema. \\
-        & O utilizador pretende submeter um trabalho. \\
-        \hline
+                               & O utilizador pretende submeter um trabalho. \\
+                               \hline
         \textbf{Post-Condition} & Se a submissão for bem-sucedida e o formato do documento for suportado, o sistema confirma a 
         submissão bem-sucedida. \\
-        & Se houver problemas com a submissão (por exemplo, formato não suportado ou falha no carregamento), o sistema 
-        apresenta uma mensagem de erro, e a submissão não é processada. \\
-        \hline
+                                & Se houver problemas com a submissão (por exemplo, formato não suportado ou falha no carregamento), o sistema 
+                                apresenta uma mensagem de erro, e a submissão não é processada. \\
+                                \hline
     \end{tabular}
 \end{table}
+
+\newpage
+
+\subsection{Storing of work}
+Todos os ficheiros enviados pela aplicação serão guardados apenas
+durante a sua utilidade para avaliação e entrega da mesma.
+Cada ficheiro terá um código hash único e será encriptado para assegurar
+segurança dos trabalhos.
+
+Cada trabalho será guardado assim que o aluno envie o mesmo para um professor.
+Antes do trabalho entrar no sistema, será criado um código hash com os seu estado
+atual e será encriptado, sendo apenas possível abrir o ficheiro depois de ser feito
+o login como o professor para que o documento foi enviado.
+
+Depois de ser realizada a avaliação, a mesma será guardada separadamente do trabalho avaliado.
+Tendo apenas capacidade de ser visualizada se for aberta em conjunto com o trabalho correspondente
+pelo aluno correspondente.
+
+Depois de todos este paços serem executados, o documento será eliminado, deixando apenas a
+avaliação para ser utilizada como os professores desejarem.
 
 \newpage
 
@@ -217,43 +249,54 @@ O sistema deve calcular e armazenar as pontuações globais dos trabalhos.
         dos trabalhos. \\
         \hline
         \textbf{Inputs} & Trabalho submetido (pelos estudantes). \\
-        & Critérios de avaliação (personalizáveis, por exemplo, rubricas) fornecidos pelo professor. \\
-        & Comentários e pontuações fornecidos pelo professor. \\
-        \hline
+                        & Critérios de avaliação (personalizáveis, por exemplo, rubricas) fornecidos pelo professor. \\
+                        & Comentários e pontuações fornecidos pelo professor. \\
+                        \hline
         \textbf{Source} & Professores a aceder aos trabalhos submetidos pelos estudantes. \\
         \hline
         \textbf{Outputs} & Pontuações de avaliação e feedback para cada trabalho. \\
-        & Pontuações globais para cada trabalho. \\
-        \hline
+                         & Pontuações globais para cada trabalho. \\
+                         \hline
         \textbf{Destination} & Registo do estudante no sistema (para feedback individual). \\
-        & Armazenamento/base de dados do sistema (para pontuações globais). \\
-        \hline
+                             & Armazenamento/base de dados do sistema (para pontuações globais). \\
+                             \hline
         \textbf{Action} & Os professores reveem os trabalhos submetidos. \\
-        & Utilizam critérios de avaliação personalizáveis (por exemplo, rubricas) para avaliar os trabalhos. \\
-        & Os professores fornecem comentários e atribuem pontuações a cada trabalho. \\
-        & O sistema calcula as pontuações globais com base nos critérios fornecidos. \\
-        & As pontuações e feedback são armazenados para cada trabalho. \\
-        \hline
+                        & Utilizam critérios de avaliação personalizáveis (por exemplo, rubricas) para avaliar os trabalhos. \\
+                        & Os professores fornecem comentários e atribuem pontuações a cada trabalho. \\
+                        & O sistema calcula as pontuações globais com base nos critérios fornecidos. \\
+                        & As pontuações e feedback são armazenados para cada trabalho. \\
+                        \hline
         \textbf{Requirements} & Critérios de avaliação personalizáveis (por exemplo, rubricas) devem ser definidos e 
         disponíveis no sistema. \\
-        & O sistema deve suportar o armazenamento de dados de avaliação. \\
-        \hline
+                              & O sistema deve suportar o armazenamento de dados de avaliação. \\
+                              \hline
         \textbf{Pre-Conditions} & Os professores têm acesso aos trabalhos submetidos. \\
-        & Os critérios de avaliação estão estabelecidos. \\
-        \hline
+                                & Os critérios de avaliação estão estabelecidos. \\
+                                \hline
         \textbf{Post-Conditions} & Os trabalhos individuais têm associadas pontuações de avaliação e feedback. \\
-        & As pontuações globais para cada trabalho são calculadas e armazenadas. \\
-        & Os estudantes podem aceder ao seu feedback individual. \\
-        & Os professores podem gerir e rever as avaliações para cada trabalho. \\
-        \hline
+                                 & As pontuações globais para cada trabalho são calculadas e armazenadas. \\
+                                 & Os estudantes podem aceder ao seu feedback individual. \\
+                                 & Os professores podem gerir e rever as avaliações para cada trabalho. \\
+                                 \hline
     \end{tabular}
 \end{table}
 
+Para este tipo de avaliação ser possível, será apresentada uma interface gráfica
+ao professor.
+Esta interface será mapeada de acordo com o documento que está a ser avaliado
+linha por linha. Ao ser inserido um comentário pelo professor, uma cotação ou
+uma correção, será guardada a posição da mesma, sendo possível assim, reconstruir
+a correção do professor quando esta for ser vista pelo aluno. Isto evita a necessidade
+de modificar os documentos enviados pelos alunos em si.
+
 \newpage
 
-\subsection{Notifications for students}
+\subsection{Notifications}
 O sistema deve notificar os estudantes automaticamente quando os seus trabalhos forem avaliados. 
 As notificações devem incluir os resultados da avaliação e os comentários. 
+
+As notificações serão simples notificações de IOS/Android/Windows/MacOS/Linux, utilizando
+os sistemas de notificações oferecidos por estas plataformas.
 
 \begin{table}[H]
     \centering
@@ -271,22 +314,61 @@ As notificações devem incluir os resultados da avaliação e os comentários.
         \textbf{Destination} & Canais de comunicação dos estudantes (por exemplo, email, notificações no sistema). \\
         \hline
         \textbf{Action} & Após a conclusão da avaliação dos trabalhos, o sistema gera mensagens de notificação. \\
-        & Estas mensagens incluem os resultados da avaliação (pontuações) e o feedback. \\
-        & O sistema envia estas notificações aos respetivos estudantes. \\
-        \hline
+                        & Estas mensagens incluem os resultados da avaliação (pontuações) e o feedback. \\
+                        & O sistema envia estas notificações aos respetivos estudantes. \\
+                        \hline
         \textbf{Requirements} & Um mecanismo para a geração de notificações automáticas. \\
-        & Acesso às informações de contacto dos estudantes (por exemplo, endereços de email). \\
-        \hline
+                              & Acesso às informações de contacto dos estudantes (por exemplo, endereços de email). \\
+                              \hline
         \textbf{Pre-Conditions} & As avaliações dos trabalhos foram concluídas pelos professores. \\
-        & As informações de contacto dos estudantes estão disponíveis e atualizadas. \\
-        \hline
+                                & As informações de contacto dos estudantes estão disponíveis e atualizadas. \\
+                                \hline
         \textbf{Post-Conditions} & Os estudantes recebem notificações automáticas contendo os resultados da avaliação 
         dos seus trabalhos e o feedback. \\
-        & Os estudantes podem aceder aos seus resultados de avaliação e ao feedback através dos seus canais de comunicação 
-        escolhidos (por exemplo, email, notificações no sistema). \\
-        \hline
+                                 & Os estudantes podem aceder aos seus resultados de avaliação e ao feedback através dos seus canais de comunicação 
+                                 escolhidos (por exemplo, email, notificações no sistema). \\
+                                 \hline
     \end{tabular}
 \end{table}
+
+\subsubsection{Notifications for students}
+Cada notificação para estudantes será personalizada de acordo com o trabalho
+que representa, disciplina e professor a quem foi enviado.
+Uma notificação poderá conter mensagens como os seguintes exemplos:
+
+\begin{itemize}
+    \item Trabalho enviado a professor:
+        \begin{itemize}
+            \item O trabalho \textit{x} foi enviado ao professor \textit{y} | 19:04.
+        \end{itemize}
+    \item Trabalho recebido por professor:
+        \begin{itemize}
+            \item O trabalho \textit{x} foi recebido pelo professor \textit{y} | 19:06.
+        \end{itemize}
+    \item Avaliação recebida por aluno:
+        \begin{itemize}
+            \item Recebeu uma avaliação nova do trabalho \textit{x} | 19:07
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{Notifications for professors}
+Tal como para os estudantes, a informação apresentada nas notificações
+dos professores irá variar de acordo com os trabalho recebido e condições
+como o tempo a que as mesmas foram enviadas:
+\begin{itemize}
+    \item Novo trabalho para avaliar recebido:
+        \begin{itemize}
+            \item Trabalho novo recebido de aluno \textit{x} da turma \textit{y} da disciplina \textit{z}. | 19:10
+        \end{itemize}
+    \item Avaliação recebida:
+        \begin{itemize}
+            \item A avaliação do trabalho \textit{x} foi recebida pelo aluno \textit{y} da turma \textit{z}
+                da disciplina \textit{h} | 19:16
+        \end{itemize}
+\end{itemize}
+
+Para além das notificações explicadas até agora, a aplicação não deve enviar qualquer outro tipo de notificação
+aos utilizadores.
 
 \newpage
 

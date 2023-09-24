@@ -3,14 +3,18 @@
 \contentsline {section}{\numberline {3}Functional Requirements}{4}{section.3}%
 \contentsline {subsection}{\numberline {3.1}User authentication}{5}{subsection.3.1}%
 \contentsline {subsubsection}{\numberline {3.1.1}User registration}{5}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}User login}{6}{subsubsection.3.1.2}%
 \contentsline {subsection}{\numberline {3.2}Submission of work}{7}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Evaluation of Work}{8}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Notifications for students}{9}{subsection.3.4}%
-\contentsline {section}{\numberline {4}Non-Functional Requirements}{10}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Performance}{10}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Security}{10}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Usability}{10}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Scalability}{10}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Stability}{10}{subsection.4.5}%
-\contentsline {paragraph}{Cópia de Segurança e Recuperação de Dados:}{10}{section*.2}%
-\contentsline {subsection}{\numberline {4.6}Notification Delivery}{10}{subsection.4.6}%
+\contentsline {subsection}{\numberline {3.3}Storing of work}{8}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Evaluation of Work}{9}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Notifications}{10}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Notifications for students}{10}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Notifications for professors}{11}{subsubsection.3.5.2}%
+\contentsline {section}{\numberline {4}Non-Functional Requirements}{12}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Performance}{12}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Security}{12}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Usability}{12}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Scalability}{12}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Stability}{12}{subsection.4.5}%
+\contentsline {paragraph}{Cópia de Segurança e Recuperação de Dados:}{12}{section*.2}%
+\contentsline {subsection}{\numberline {4.6}Notification Delivery}{12}{subsection.4.6}%
