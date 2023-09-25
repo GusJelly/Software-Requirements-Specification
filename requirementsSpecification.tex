@@ -63,6 +63,7 @@ do sistema da aplicação).
         \begin{itemize}
             \item Offline storing of work;
             \item Online storing of work;
+            \item Backup of work
         \end{itemize}
     \item File tampering verification;
     \item Evaluation of work;
@@ -231,7 +232,7 @@ pelo aluno correspondente.
 Depois de todos este paços serem executados, o documento será eliminado, deixando apenas a
 avaliação para ser utilizada como os professores desejarem.
 
-\subsubsection{Details}
+\subsubsection{Online storing}
 Os trabalhos irão ser guardados numa  base de dados central. Todos os binários enviados serão guardados
 de acordo com os pontos feitos anteriormente. Sabendo que a maior parte dos ficheiros apenas são enviados
 e abertos uma vez, não é necessário uma grande solução de caching para esta aplicação.
@@ -239,6 +240,19 @@ e abertos uma vez, não é necessário uma grande solução de caching para esta
 Uma base de dados relacional consegue preencher todos os casos de utilização possíveis da aplicação.
 Consequentemente, a nossa solução de \textit{storage} será extremamente simples, assim evitando várias
 complicações causadas por sistemas em que temos de partilhar informação entre várias bases de dados diferentes.
+
+\subsubsection{Offline storing and backups}
+Todos os trabalhos recebidos e enviados pelos utilizadores serão guardados nas suas respectivas máquinas.
+Isto é para assegurar que nenhum trabalho seja perdido ao criar três cópias do mesmo documento em três sistemas
+distintos.
+
+O aluno irá ter o seu trabalho guardado na própria máquina, o nosso servidor irá ter uma cópia e o professor
+irá ter uma cópia criada apóz o download do trabalho para a avaliação.
+Este sistema também se aplica a avaliações. Sendo criadas cópias pela mesma lógica nos nossos servidores,
+na máquina do professor e na máquina do aluno.
+
+Ao criar esta redundância de dados, é drasticamente reduzida a possibilidade da perda de dados ao interagir
+com os sistema, pois é virtualmente impossível todos estes pontos falharem em simultâneo.
 
 \newpage
 
@@ -383,6 +397,20 @@ aos seus utilizadores. Isto é para evitar o envio excessivo de notificações q
 
 \section{Non-Functional Requirements}
 
+\begin{itemize}
+    \item Performance
+    \item Security
+    \item Usability
+    \item Interação simples
+        \begin{itemize}
+            \item interface gráfica
+            \item interface de linha de comandos
+        \end{itemize}
+    \item Scalability
+    \item Stability
+    \item Easy notifications
+\end{itemize}
+
 \subsection{Performance}
 O sistema deve ser capaz de lidar com um grande número de submissões de trabalhos e avaliações simultaneamente. 
 Os tempos de resposta para aceder aos trabalhos e avaliações devem ser rápidos.
@@ -441,17 +469,30 @@ necessitem de outras maneiras de utilizar a aplicação que não forem desenvolv
 
 \subsection{Scalability}
 O sistema deve ser projetado para crescer à medida que o número de utilizadores e submissões aumenta ao longo do tempo.
-A utilização de técnologias provadas em marcado será uma necessidade durante a construção do sistema.
+A utilização de técnologias provadas em mercado será uma necessidade durante a construção do sistema.
+
+Para Isto ser assegurado, a aplicação base será apenas em linha de comandos, criando um sistema fácil de
+ser expandido e modificado caso seja necessário. Os servidores irão utilizar técnologias Open Source
+para ser possível mudar os mesmos para as necessidades da aplicação e para ter acesso a mais suporte
+externo para evitar futuros problemas que normalmente acompanham plataformas proprietárias.
 
 \subsection{Stability}
 O sistema deve estar disponível e ser fiável, com um tempo de inatividade mínimo.
 
-\paragraph{Cópia de Segurança e Recuperação de Dados:}
+\paragraph{Cópia de Segurança e Recuperação de Dados:\\}
 Deve haver cópias de segurança regulares de dados (trabalhos, avaliações, contas de utilizador).
 Deve existir um plano para a recuperação de dados em caso de falhas no sistema.
 
+\paragraph{Simplicidade:\\}
+Sendo desenvolvida com técnologias utilizadas pela indústria e técnologias acessiveis, é assegurada
+a simplicidade da aplicação e consequentemente, a simplicidade da manutenção da mesma por nós e pelo
+cliente. Isto deixa o cliente resolver os seus problemas sem necessitar de recursos externos que podem
+colocar em causa a sua utilização da aplicação.
+
 \subsection{Notification Delivery}
-As notificações aos estudantes/professores devem ser simples e rápidas. 
-As preferências de notificação (por exemplo, email, notificações dentro do sistema) devem ser configuráveis pelos utilizadores.
+As notificações da aplicação devem ser simples de ler de configurar. Ao utilizar as opções oferecidas pelas
+plataformas utilizadas, o utilizador será capaz de mudar as notificações de maneira a integrar as mesmas
+com a sua maneira preferível de trabalhar, sem necessitar de ter alguma experiência com programação ou com
+o desenvolvimento ou funcionamento da aplicação.
 
 \end{document}
