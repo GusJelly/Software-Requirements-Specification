@@ -16,14 +16,8 @@ avaliação de trabalhos entre alunos e professores.
 Estas três funcionalidades são as principais funções da aplicação, 
 sendo necessárias para a sua utilidade básica.
 
-\newpage
-
-\tableofcontents{}
-
-\newpage
-
-\section{User Requirements Definition}
-Esta aplicação permite a um aluno enviar trabalhos a um professor 
+\section{Introduction}
+A aplicação permite a um aluno enviar trabalhos a um professor 
 em específico. O aluno será avisado quando o trabalho em questão 
 é recebido pelo professor a quem o trabalho foi enviado. 
 Este será capaz de avaliar o trabalho enviado pelo aluno e 
@@ -47,6 +41,12 @@ formato guardado em pleno texto (pdf é o formato
 preferível para evitar qualquer possibilidade de acontecerem 
 alterações ao documento durante o seu tempo de vida dentro 
 do sistema da aplicação).
+
+\newpage
+
+\tableofcontents{}
+
+\newpage
 
 \newpage
 
@@ -112,7 +112,7 @@ O registo de utilizadores necessita do fornecimento de vários dados distintos:
 \end{itemize}
 
 Toda esta informação será utilizada pela aplicação para criar as relações
-entres contas necessárias para organizar os professores and alunos em turmas
+entre contas necessárias para organizar os professores and alunos em turmas
 diferentes. Esta organização evita o contacto entre alunos a professores acidental
 out indesejado (ex: um aluno enviar um trabalho a um professor com quem não tem aulas).
 
@@ -230,6 +230,15 @@ pelo aluno correspondente.
 
 Depois de todos este paços serem executados, o documento será eliminado, deixando apenas a
 avaliação para ser utilizada como os professores desejarem.
+
+\subsubsection{Details}
+Os trabalhos irão ser guardados numa  base de dados central. Todos os binários enviados serão guardados
+de acordo com os pontos feitos anteriormente. Sabendo que a maior parte dos ficheiros apenas são enviados
+e abertos uma vez, não é necessário uma grande solução de caching para esta aplicação.
+
+Uma base de dados relacional consegue preencher todos os casos de utilização possíveis da aplicação.
+Consequentemente, a nossa solução de \textit{storage} será extremamente simples, assim evitando várias
+complicações causadas por sistemas em que temos de partilhar informação entre várias bases de dados diferentes.
 
 \newpage
 
@@ -358,17 +367,17 @@ como o tempo a que as mesmas foram enviadas:
 \begin{itemize}
     \item Novo trabalho para avaliar recebido:
         \begin{itemize}
-            \item Trabalho novo recebido de aluno \textit{x} da turma \textit{y} da disciplina \textit{z}. | 19:10
+            \item Trabalho \textbf{novo} recebido de aluno \textit{x} da turma \textit{y} da disciplina \textit{z}. | 19:10
         \end{itemize}
     \item Avaliação recebida:
         \begin{itemize}
-            \item A avaliação do trabalho \textit{x} foi recebida pelo aluno \textit{y} da turma \textit{z}
+            \item A \textbf{avaliação} do trabalho \textit{x} foi recebida pelo aluno \textit{y} da turma \textit{z}
                 da disciplina \textit{h} | 19:16
         \end{itemize}
 \end{itemize}
 
 Para além das notificações explicadas até agora, a aplicação não deve enviar qualquer outro tipo de notificação
-aos utilizadores.
+aos seus utilizadores. Isto é para evitar o envio excessivo de notificações que acontece na industria.
 
 \newpage
 
@@ -378,15 +387,57 @@ aos utilizadores.
 O sistema deve ser capaz de lidar com um grande número de submissões de trabalhos e avaliações simultaneamente. 
 Os tempos de resposta para aceder aos trabalhos e avaliações devem ser rápidos.
 
+Os tempos de resposta serão alcançados pela implementação de um sistema de caching local.
+Este sistema irá fazer o download de todos os documentos recebidos ao ligar a aplicação ao invés
+de fazer o download apenas quando os documentos estiverem a ser abertos. Este download deve ser
+feito assincronamente para evitar o bloqueio da funcionalidade do resto da aplicação. Permitindo
+a interação com os resto das funcionalidades da aplicação em tempo real durante o download de outros
+ficheiros que não  se encontram a ser utilizados.
+
 \subsection{Security}
 Os dados dos utilizadores, trabalhos e avaliações devem ser armazenados de forma segura. 
 A autenticação de utilizadores deve utilizar métodos de encriptação seguros. 
 Apenas utilizadores autorizados (professores e estudantes) devem ter acesso a dados introduzidos no sistema por outros 
 utilizadores.
 
+Os métodos utilizados para assegurar a segurança dos utilizadores e dos documentos dentro da aplicação já forem explicados
+anteriormente neste documento.
+
+Para assegurar que os documentos não são modificados depois de entrarem dentro do sistema da aplicação, irá ser
+utilizado um sistema de hashing que identificará o estado do documento quando este entra na aplicação pela primeira
+vez. Qualquer mudança ao documento (ex, nome) será refletida numa mudança do seu código hash. Isto permite que a
+aplicação consiga assegurar a integridade de todos os documentos aos seus utilizadores, deixando estes saber que
+não é necessário desconfiar os documentos enviados pela aplicação.
+
+Em termos de segurança de utilizadores e das suas contas, toda a informação de todos os utilizadores será
+guardada e protegida utilizando um método do tipo \textit{Hash and Salting}, isto evita que uma falha na
+segurança da base da dados não signifique o comprometimento dos dados dos utilizadores.
+
 \subsection{Usability}
 A interface do utilizador deve ser intuitiva e de fácil utilização.
 Professores e estudantes devem conseguir navegar facilmente e executar tarefas dentro do sistema.
+
+Tendo em conta que é impossível criar uma interface e \textit{user experience} que seja adequada a todos os
+utilizadores, a aplicação terá duas maneiras de interação:
+\begin{itemize}
+    \item Interação gráfica.
+    \item Interação por linha de comandos.
+\end{itemize}
+
+\subsubsection{Interação gráfica}
+A interação gráfica será a maneira principal de interagir com a aplicação e as suas funcionalidades. O design e princípios
+utilizados para desenvolver estas interfaces devem seguir todos os princípios de design e regras impostos pelos sistemas
+em que a aplicação está a ser desenvolvida, seja isto um ambiente mobile ou um ambiente desktop.
+
+\subsubsection{Interação por linha de comandos}
+Para nos assegurar-mos da portabilidade da aplicação a garantir a sua utilidade em sistemas menos suportados e no futuro,
+será criada uma interface da aplicação que será utilizada pela linha de comandos.
+Esta versão apenas deve utilizar tecnologias que se encontrem em sistemas que são \textit{POSIX compliant} para
+garantir a suar portabilidade e funcionalidade em vários sistemas que seguem estes princípios.
+
+Esta versão da aplicação também será utilizada para o desenvolvimento de outras interfaces para o programa. Estas
+interfaces não seram desenvolvidas por nós, mas sim pelas empresas que se encontram a utilizar a aplicação e
+necessitem de outras maneiras de utilizar a aplicação que não forem desenvolvidas por nós.
 
 \subsection{Scalability}
 O sistema deve ser projetado para crescer à medida que o número de utilizadores e submissões aumenta ao longo do tempo.

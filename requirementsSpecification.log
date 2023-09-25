@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/CVE-2023-32700 patched) (preloaded format=pdflatex 2023.9.24)  24 SEP 2023 19:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/CVE-2023-32700 patched) (preloaded format=pdflatex 2023.9.24)  25 SEP 2023 14:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -194,21 +194,21 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
  [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12] (./requirementsSpecification.aux)
 Package rerunfilecheck Info: File `requirementsSpecification.out' has not changed.
-(rerunfilecheck)             Checksum: 5B5816E229D89382ABC055EB9EAC9520;2726.
+(rerunfilecheck)             Checksum: 47D00A1ABF36CB0504542BFA777D4205;3149.
  ) 
 Here is how much of TeX's memory you used:
- 7462 strings out of 478126
- 119427 string characters out of 5842787
+ 7468 strings out of 478126
+ 119547 string characters out of 5842787
  1864793 words of memory out of 6000000
- 27429 multiletter control sequences out of 15000+600000
+ 27432 multiletter control sequences out of 15000+600000
  517223 words of font info for 48 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,11n,77p,284b,545s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,11n,77p,311b,545s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on requirementsSpecification.pdf (12 pages, 122418 bytes).
+Output written on requirementsSpecification.pdf (12 pages, 132119 bytes).
 PDF statistics:
- 200 PDF objects out of 1000 (max. 8388607)
- 170 compressed objects within 2 object streams
- 34 named destinations out of 1000 (max. 500000)
- 153 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 218 PDF objects out of 1000 (max. 8388607)
+ 188 compressed objects within 2 object streams
+ 37 named destinations out of 1000 (max. 500000)
+ 177 words of extra memory for PDF output out of 10000 (max. 10000000)
 
